@@ -7,6 +7,14 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  loggedin: boolean = false;
+  brands: any[] = [];
+  email: undefined|'mailer';
+
   constructor() {}
+
+  signOuter(){
+    
+  }
 
 }

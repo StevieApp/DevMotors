@@ -1,20 +1,181 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content style="scrollbar-width: thin;" mode="ios">
+  <!-- overflow-y: scroll;
+  height: 100vh; -->
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" class="me-3 mb-3">
+    <a href="tel:+254728680963" class="hover-text">
+      <span class="tooltip-text" id="left">Call: +254-728-680963</span>
+      <ion-fab-button>
+        <ion-icon name="call-sharp"></ion-icon>
+      </ion-fab-button>
+    </a>
+  </ion-fab>
+  <div class="wrapper">
+    <div class="offcanvas offcanvas-start lighter-bg" style="max-width: 75%;" tabindex="-1" id="navbarSupportedContent">
+      <ul class="navbar-nav me-0 mb-2 mb-lg-0 nav-underline">
+        <li class="nav-item m-2" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+          <a class="navbar-brand" href="/">
+            <img class="rounded m-auto w-100" src="../../assets/Logo.jpeg" alt="Maci Autos Logo" height="140">
+          </a>
+        </li>
+        <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+          <a class="nav-link active oswalder" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
+            <ion-text color="dark">HOME</ion-text>
+          </a>
+        </li>
+        <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+          <a class="nav-link active oswalder" routerLink="/show-room" routerLinkActive="active" aria-current="page">
+            <ion-text color="dark">SHOWROOM</ion-text>
+          </a>
+        </li>
+        <li class="nav-item ps-3 dropdown">
+          <a class="nav-link dropdown-toggle oswalder"role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <ion-text color="dark">BRANDS</ion-text>
+          </a>
+          <ul class="dropdown-menu" data-bs-theme="dark">
+            @for (brand of brands; track $index;) {
+              <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item oswalder" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
+            }
+            <li><hr class="dropdown-divider"></li>
+            <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item oswalder" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
+          </ul>
+        </li>
+        @if (loggedin == false) {
+          <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+            <a class="nav-link active oswalder" routerLink="/login" routerLinkActive="active" aria-current="page">
+              <ion-text color="dark">SIGN IN</ion-text>
+            </a>
+          </li>
+        }@else {
+          @if (email && email=="mailer") {
+            <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+              <a class="nav-link active oswalder" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
+                <ion-text color="dark">ADD VEHICLE</ion-text>
+              </a>
+            </li>
+            <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+              <a class="nav-link active oswalder" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
+                <ion-text color="dark">ADD BRAND</ion-text>
+              </a>
+            </li>
+          }
+          <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+            <a tappable class="nav-link active oswalder" routerLinkActive="active" aria-current="page" (click)="signOuter()">
+              <ion-text color="danger">SIGN OUT</ion-text>
+            </a>
+          </li>
+        }
+      </ul>
+      <form class="d-flex" role="search">
+        <ion-fab class="position-relative ps-3">
+          <ion-fab-button size="small" type="submit" routerLink="/search" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+            <ion-icon name="search-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </form>
+    </div>
+    <nav class="navbar navbar-expand-lg sticky-top pt-5 navbar-bg shadow-sm">
+      <div class="container-fluid padder">
+        <a class="navbar-brand" href="/">
+          <img class="rounded" src="../../assets/Logo.jpeg" alt="Maci Autos Logo" width="90" height="40">
+        </a>
+        <button class="navbar-toggler p-0 fs-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-button fill="clear" size="large">
+            <ion-icon name="menu-outline" color="primary"></ion-icon>
+          </ion-button>
+        </button>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
+            <li class="nav-item">
+              <a class="nav-link active oswalder" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
+                <ion-text color="dark">HOME</ion-text>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active oswalder" routerLink="/show-room" routerLinkActive="active" aria-current="page">
+                <ion-text color="dark">SHOWROOM</ion-text>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li> -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle oswalder" routerLinkActive="active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <ion-text color="dark">BRANDS</ion-text>
+              </a>
+              <ul class="dropdown-menu" data-bs-theme="dark">
+                @for (brand of brands; track $index;) {
+                  <li><a class="dropdown-item oswalder" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
+                }
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item oswalder" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
+              </ul>
+            </li>
+            @if (loggedin == false) {
+              <li class="nav-item">
+                <a class="nav-link active oswalder" routerLink="/login" routerLinkActive="active" aria-current="page">
+                  <ion-text color="dark">SIGN IN</ion-text>
+                </a>
+              </li>
+            }@else {
+              @if (email && email=="mailer") {
+                <li class="nav-item">
+                  <a class="nav-link active oswalder" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
+                    <ion-text color="dark">ADD VEHICLE</ion-text>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active oswalder" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
+                    <ion-text color="dark">ADD BRAND</ion-text>
+                  </a>
+                </li>
+              }
+              <li class="nav-item">
+                <a tappable class="nav-link active oswalder" routerLinkActive="active" aria-current="page" (click)="signOuter()">
+                  <ion-text color="danger">SIGN OUT</ion-text>
+                </a>
+              </li>
+            }
+          </ul>
+          <form class="d-flex" role="search">
+            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+            <ion-fab class="position-relative">
+              <ion-fab-button size="small" type="submit" routerLink="/search">
+                <ion-icon name="search-outline"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+            <!-- <button class="btn btn-outline-success">Search</button> -->
+          </form>
+        </div>
+        
+      </div>
+    </nav>
+    <div class="offcanvas-body">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="container-fluid ps-5 pe-5 mt-2 pb-4 shadow-sm ">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
+          <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center py-3 my-4 border-bottom w-100">
+            <li class="ms-3">
+              <a class="darker-txt" href="https://www.tiktok.com/@vybeit" target="_blank"><i class="bi bi-tiktok"></i></a>
+            </li>
+            <li class="ms-3">
+              <a class="text-primary" href="https://www.facebook.com/@" target="_blank"><i class="bi bi-facebook"></i></a>
+            </li>
+          </ul>
+        </div>
+        <p class="col-md-4 mb-0 darker-txt">© 2024 Maci Autos Ke</p>
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <img class="rounded" src="../../assets/Logo.jpeg" alt="Maci Autos Logo" width="90" height="40">
+        </a>
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item"><a href="/home" class="nav-link px-2 darker-txt">Home</a></li>
+          <li class="nav-item"><a href="/about" class="nav-link px-2 darker-txt">About</a></li>
+          <li class="nav-item"><ion-text class="nav-link px-2 darker-txt">
+            <i class="bi bi-geo-alt"></i> Nairobi, Ke</ion-text>
+          </li>
+        </ul>
+      </footer>
+    </div>
   </div>
 </ion-content>
