@@ -4,62 +4,68 @@
   <ion-fab slot="fixed" horizontal="end" vertical="bottom" class="me-3 mb-3">
     <a href="tel:+254725603808" class="hover-text">
       <span class="tooltip-text" id="left">Call: +254-725-603808</span>
-      <ion-fab-button>
+      <ion-fab-button class="pop">
         <ion-icon name="call-sharp"></ion-icon>
       </ion-fab-button>
     </a>
   </ion-fab>
   <div class="wrapper">
-    <div class="offcanvas offcanvas-start lighter-bg" style="max-width: 75%;" tabindex="-1" id="navbarSupportedContent">
+    <div class="offcanvas offcanvas-start primary-bg" style="max-width: 75%;" tabindex="-1" id="navbarSupportedContent">
       <ul class="navbar-nav me-0 mb-2 mb-lg-0 nav-underline">
         <li class="nav-item m-2" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
           <a class="navbar-brand" href="/">
-            <img class="rounded m-auto w-100" src="../../assets/Logo.png" alt="Dev Motors Logo" height="140">
+            <img class="rounded m-auto w-100 object-fit-cover" src="../../assets/Logo.png" alt="Dev Motors Logo" height="140" 
+            onerror="this.onerror=null;this.src='assets/Logo.png';">
           </a>
         </li>
         <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-          <a class="nav-link active oswalder" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
+          <a class="nav-link active open-sans-simple" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
             <ion-text color="dark">HOME</ion-text>
           </a>
         </li>
         <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-          <a class="nav-link active oswalder" routerLink="/show-room" routerLinkActive="active" aria-current="page">
+          <a class="nav-link active open-sans-simple" routerLink="/show-room" routerLinkActive="active" aria-current="page">
             <ion-text color="dark">SHOWROOM</ion-text>
           </a>
         </li>
+        <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
+          <a class="nav-link active open-sans-simple" routerLink="/downloads" routerLinkActive="active" aria-current="page">
+            <ion-text color="dark">DOWNLOADS</ion-text>
+          </a>
+        </li>
         <li class="nav-item ps-3 dropdown">
-          <a class="nav-link dropdown-toggle oswalder"role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle open-sans-simple"role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <ion-text color="dark">BRANDS</ion-text>
           </a>
           <ul class="dropdown-menu" data-bs-theme="dark">
             @for (brand of brands; track $index;) {
-              <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item oswalder" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
+              <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item open-sans-simple" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
             }
             <li><hr class="dropdown-divider"></li>
-            <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item oswalder" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
+            <li data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"><a class="dropdown-item open-sans-simple" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
           </ul>
         </li>
         @if (loggedin == false) {
           <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-            <a class="nav-link active oswalder" routerLink="/login" routerLinkActive="active" aria-current="page">
+            <a class="nav-link active open-sans-simple" routerLink="/login" routerLinkActive="active" aria-current="page">
               <ion-text color="dark">SIGN IN</ion-text>
             </a>
           </li>
         }@else {
           @if (email && email=="mailer") {
             <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-              <a class="nav-link active oswalder" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
+              <a class="nav-link active open-sans-simple" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
                 <ion-text color="dark">ADD VEHICLE</ion-text>
               </a>
             </li>
             <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-              <a class="nav-link active oswalder" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
+              <a class="nav-link active open-sans-simple" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
                 <ion-text color="dark">ADD BRAND</ion-text>
               </a>
             </li>
           }
           <li class="nav-item ps-3" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent">
-            <a tappable class="nav-link active oswalder" routerLinkActive="active" aria-current="page" (click)="signOuter()">
+            <a tappable class="nav-link active open-sans-simple" routerLinkActive="active" aria-current="page" (click)="signOuter()">
               <ion-text color="danger">SIGN OUT</ion-text>
             </a>
           </li>
@@ -73,64 +79,67 @@
         </ion-fab>
       </form>
     </div>
-    <nav class="navbar navbar-expand-lg sticky-top pt-5 navbar-bg shadow-sm">
+    <nav class="navbar navbar-expand-lg sticky-top pt-5 shadow-sm primary-bg">
       <div class="container-fluid padder">
         <a class="navbar-brand" href="/">
-          <img class="rounded" src="../../assets/Logo.png" alt="Dev Motors Logo" width="90" height="40">
+          <img class="rounded" src="../../assets/Logo.png" alt="Dev Motors Logo" width="90" height="40" 
+          onerror="this.onerror=null;this.src='assets/Logo.png';">
         </a>
         <button class="navbar-toggler p-0 fs-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <ion-button fill="clear" size="large">
-            <ion-icon name="menu-outline" color="primary"></ion-icon>
+            <ion-icon name="menu-outline" color="light"></ion-icon>
           </ion-button>
         </button>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
             <li class="nav-item">
-              <a class="nav-link active oswalder" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
+              <a class="nav-link active open-sans-simple" routerLink="/home" routerLinkActive="active" aria-current="page" href="#">
                 <ion-text color="dark">HOME</ion-text>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active oswalder" routerLink="/show-room" routerLinkActive="active" aria-current="page">
+              <a class="nav-link active open-sans-simple" routerLink="/show-room" routerLinkActive="active" aria-current="page">
                 <ion-text color="dark">SHOWROOM</ion-text>
               </a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li> -->
+            <li class="nav-item">
+              <a class="nav-link active open-sans-simple" routerLink="/downloads" routerLinkActive="active" aria-current="page">
+                <ion-text color="dark">DOWNLOADS</ion-text>
+              </a>
+            </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle oswalder" routerLinkActive="active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle open-sans-simple" routerLinkActive="active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <ion-text color="dark">BRANDS</ion-text>
               </a>
               <ul class="dropdown-menu" data-bs-theme="dark">
                 @for (brand of brands; track $index;) {
-                  <li><a class="dropdown-item oswalder" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
+                  <li><a class="dropdown-item open-sans-simple" href="/brand/{{brand.name}}" routerLink="/brand/{{brand.name}}" routerLinkActive="active">{{brand.name.toUpperCase()}}</a></li>
                 }
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item oswalder" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
+                <li><a class="dropdown-item open-sans-simple" href="/brand/Others" routerLink="/brand/Others" routerLinkActive="active">OTHERS</a></li>
               </ul>
             </li>
             @if (loggedin == false) {
               <li class="nav-item">
-                <a class="nav-link active oswalder" routerLink="/login" routerLinkActive="active" aria-current="page">
+                <a class="nav-link active open-sans-simple" routerLink="/login" routerLinkActive="active" aria-current="page">
                   <ion-text color="dark">SIGN IN</ion-text>
                 </a>
               </li>
             }@else {
               @if (email && email=="mailer") {
                 <li class="nav-item">
-                  <a class="nav-link active oswalder" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
+                  <a class="nav-link active open-sans-simple" routerLink="/add-vehicle" routerLinkActive="active" aria-current="page">
                     <ion-text color="dark">ADD VEHICLE</ion-text>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active oswalder" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
+                  <a class="nav-link active open-sans-simple" routerLink="/add-brand" routerLinkActive="active" aria-current="page">
                     <ion-text color="dark">ADD BRAND</ion-text>
                   </a>
                 </li>
               }
               <li class="nav-item">
-                <a tappable class="nav-link active oswalder" routerLinkActive="active" aria-current="page" (click)="signOuter()">
+                <a tappable class="nav-link active open-sans-simple" routerLinkActive="active" aria-current="page" (click)="signOuter()">
                   <ion-text color="danger">SIGN OUT</ion-text>
                 </a>
               </li>
@@ -157,20 +166,21 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
           <ul class="nav col-md-4 justify-content-end list-unstyled d-flex align-items-center py-3 my-4 border-bottom w-100">
             <li class="ms-3">
-              <a class="darker-txt" href="https://www.tiktok.com/@vybeit" target="_blank"><i class="bi bi-tiktok"></i></a>
+              <a class="darker-txt" href="https://www.tiktok.com/@ferrari" target="_blank"><i class="bi bi-tiktok"></i></a>
             </li>
             <li class="ms-3">
-              <a class="text-primary" href="https://www.facebook.com/@" target="_blank"><i class="bi bi-facebook"></i></a>
+              <a class="text-primary" href="https://www.facebook.com/Ferrari" target="_blank"><i class="bi bi-facebook"></i></a>
             </li>
           </ul>
         </div>
         <p class="col-md-4 mb-0 darker-txt">© 2024 Dev Motors</p>
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <img class="rounded" src="../../assets/Logo.png" alt="Dev Motors Logo" width="90" height="40">
+          <img class="rounded pop" src="../../assets/Logo.png" alt="Dev Motors Logo" width="90" height="40"
+          onerror="this.onerror=null;this.src='assets/Logo.png';">
         </a>
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item"><a href="/home" class="nav-link px-2 darker-txt">Home</a></li>
-          <li class="nav-item"><a href="/about" class="nav-link px-2 darker-txt">About</a></li>
+          <!-- <li class="nav-item"><a href="/about" class="nav-link px-2 darker-txt">About</a></li> -->
           <li class="nav-item"><ion-text class="nav-link px-2 darker-txt">
             <i class="bi bi-geo-alt"></i> Nairobi, Ke</ion-text>
           </li>

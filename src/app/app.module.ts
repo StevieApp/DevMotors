@@ -20,7 +20,8 @@ const firebaseConfig = environment.firebaseConfig;
 // Initialize Firebase
 // initializeApp(firebaseConfig);
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+getAnalytics(app);
+//const analytics = getAnalytics(app);
 
 @NgModule({
   declarations: [AppComponent],

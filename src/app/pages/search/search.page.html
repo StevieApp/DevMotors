@@ -1,13 +1,106 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Search</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Search</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div class="position-fixed ms-1" style="z-index:999; width: 98%;">
+  <ion-item mode="ios">
+    <ion-searchbar class="rounded-4" name="search" show-clear-button="focus" mode="ios" [(ngModel)]="searchtext"></ion-searchbar>
+    <ion-button slot="end" (click)="dosearch()">Search</ion-button>
+  </ion-item>
+  <ion-item mode="ios">
+    <ion-button id="open-modal" (click)="setOpen(true)" expand="block" class="w-100" size="medium"><i class="bi bi-filter fs-5"></i> More Filters</ion-button>
+  </ion-item>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12" >
+      <ion-modal trigger="open-modal" [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-content>
+            <div class="d-flex w-100 h-100">
+              <div class="m-auto w-70 h-70">
+                <ion-item><p class="text-center w-100 mt-2 mb-2 fs-4 ubuntu-bold">Additional Filters</p></ion-item>
+                <ion-item>
+                  <ion-input label="Min Value" (change)="newMaxMin('min')" type="number" labelPlacement="floating" class="text-center me-1" min="0" fill="outline" [(ngModel)]="pricing.lower"></ion-input>
+                  <ion-input label="Max Value" (change)="newMaxMin('max')" type="number" labelPlacement="floating" class="text-center ms-1" min="0" fill="outline" [(ngModel)]="pricing.upper"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-range id="ranger"  #ranger label="Price Range" aria-label="Price Range" pin="false" [step]="100000" [ticks]="true" [dualKnobs]="true" [min]="minprice" [max]="maxprice" [(ngModel)]="pricing" ></ion-range>
+                </ion-item>
+                <ion-item>
+                  <ion-select class="mb-2 mt-2" label="Brand" [(ngModel)]="searchbrand" label-placement="floating" fill="outline" helperText="Select Brand of Vehicle">
+                    <ion-select-option value="" color="danger"><ion-text color="danger">ALL</ion-text></ion-select-option>
+                    @for (brand of brands; track $index) {
+                      <ion-select-option value="{{brand.name.toUpperCase()}}">{{brand.name.toUpperCase()}}</ion-select-option>
+                    }
+                    <ion-item-divider></ion-item-divider>
+                    <ion-select-option value="OTHER">OTHER</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item class="sticky-bottom">
+                  <ion-button mode="ios" expand="block" class="w-100" size="medium" color="success" (click)="filtering=true;dosearch();setOpen(false);"><i class="bi bi-filter fs-5"></i> Apply Changes</ion-button>
+                </ion-item>
+                <ion-item class="sticky-bottom">
+                  <ion-button mode="ios" expand="block" class="w-100" size="medium" color="warning" (click)="filtering=false;resetFilters()"><i class="bi bi-x fs-5"></i> Clear Filters</ion-button>
+                </ion-item>          
+                <ion-item class="sticky-bottom">
+                  <ion-button mode="ios" expand="block" class="w-100" size="medium" color="danger" (click)="setOpen(false)">Close</ion-button>
+                </ion-item>
+              </div>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </div>
+  </div>
+  <div class="container min-heighter" style="padding-top: 110px;">
+    @if (filteredproducts && filteredproducts.length>0) {
+      <div class="row pt-2">
+        @for (product of filteredproducts; track $index) {
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex mb-3">
+            <ion-card mode="ios" style="width: 18rem; height: 350px;" class="hoverer m-auto">
+              <a href="/single-car/{{product.id}}" class="text-decoration-none ubuntu-bold darker-txt">
+                <img src="{{product.variations[0].images[0]}}" class="card-img-top" alt="{{product.name}} image">
+                <ion-card-content class="m-0 ps-2 pe-2">
+                  <div class="d-block lipsis">
+                    <ion-card-title mode="md" class="mt-0">{{product.name}}</ion-card-title>
+                  </div>
+                  <p class="mb-0 text-danger oswalder-bold">
+                    @if ((product.discount && product.discount>0) 
+                      || (product.variations && product.variations.length>0 && 
+                      product.variations[0].discount && product.variations[0].discount>0)) {
+                      <ion-text class="m-0 pt-0d-block">
+                        <small><del>Ksh {{product.variations[0].price.toLocaleString()}}</del></small>
+                      </ion-text>
+                    }
+                    <ion-text class="d-block">
+                      @if(product.variations && product.variations.length>0 
+                        && product.variations[0].discount && product.variations[0].discount){
+                        Ksh {{(((100-product.variations[0].discount)/100)*product.variations[0].price).toLocaleString()}}
+                      }@else if(product.discount && product.discount>0)  {
+                        Ksh {{(((100-product.discount)/100)*product.variations[0].price).toLocaleString()}}
+                      }@else{
+                        Ksh {{product.variations[0].price.toLocaleString()}}
+                      }
+                    </ion-text>
+                  </p>
+                  <p class="card-text heightz open-sans-simple">{{product.description}}</p>
+                  <ul class="list-group list-group-flush lighter-bg">
+                    <li class="list-group-item pt-1 lighter-bg"></li>
+                    <li class="list-group-item ps-0 pe-0 lighter-bg">
+                      <div class="d-grid gap-2 oswalder-light">
+                        <a href="tel:+254725603808" class="btn btn-danger">
+                          <i class="bi bi-telephone-fill"></i> Make Inquiry
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </ion-card-content>
+              </a>
+            </ion-card>
+          </div>
+        }
+      </div>
+    }@else {
+      <div class="w-100 d-flex full-height">
+        <ion-card-title mode="ios" class="m-auto text-center open-sans-simple">No Item Matches</ion-card-title>
+      </div>
+    }
+  </div>
+</div>

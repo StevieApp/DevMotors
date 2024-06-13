@@ -1,0 +1,90 @@
+// Copyright 2024 Steve Nginyo
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     https://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+.dropzone:hover{
+    // border: dashed 2px #979797; position: relative;
+    transform: scale(1.03);
+}
+
+.dropzone { 
+    width: 450px;
+    height: 190px;
+    padding: 2rem;
+    text-align: center;
+    border: dashed 1px #979797; position: relative;
+    margin: 0 auto;
+
+    input {
+        opacity: 0;
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    label {
+        color: var(--ion-color-light);
+        width: 183px;
+        height: 44px;
+        border-radius: 21.5px;
+        background-color: var(--ion-color-danger); 
+        // padding: 8px 16px;
+    }
+    h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #38424c;
+    }
+}
+
+.mona ion-card{
+    min-width: 60px;
+    text-align: center;
+}
+
+.scroller {
+    // --scrollbar-color-thumb: #ff69b4;
+    // --scrollbar-color-track: blue;
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 10px;
+    --scrollbar-radius: 5px;
+    
+}
+
+/* Modern browsers with `scrollbar-*` support */
+@supports (scrollbar-width: auto) {
+    .scroller {
+        // scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+        scrollbar-width: var(--scrollbar-width);
+        border-radius: var(--scrollbar-radius);
+    }
+}
+
+/* Legacy browsers with `::-webkit-scrollbar-*` support */
+@supports selector(::-webkit-scrollbar) {
+    .scroller::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-color-thumb);
+        border-radius: var(--scrollbar-radius);
+    }
+    .scroller::-webkit-scrollbar-track {
+        background: var(--scrollbar-color-track);
+        border-radius: var(--scrollbar-radius);
+    }
+    .scroller::-webkit-scrollbar {
+        max-width: var(--scrollbar-width-legacy);
+        max-height: var(--scrollbar-width-legacy);
+        border-radius: var(--scrollbar-radius);
+    }
+}

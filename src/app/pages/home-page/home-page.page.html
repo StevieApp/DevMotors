@@ -1,13 +1,79 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>HomePage</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">HomePage</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div id="carouselExample" class="carousel slide h-75" data-bs-touch="true">
+  <div class="carousel-indicators">
+    <div tappable class="rounded-circle mynew active" width="10" height="10"
+    type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></div>
+    @for(product of products; track $index){
+      <div tappable class="rounded-circle mynew" width="10" height="10"
+       type="button" data-bs-target="#carouselExample" [attr.data-bs-slide-to]="$index+1" [attr.aria-label]="'Slide ' + ($index+1)"></div>
+    }
+  </div>
+  <div class="carousel-inner pt-2 ps-1 pe-1 pb-4 h-100">
+    <div class="carousel-item active">
+      <img src="../../../assets/Main Photo.jpg" class="d-block m-auto heightimg rounded-2" alt="dev motors home image"
+      onerror="this.onerror=null;this.src='assets/Main Photo.jpg';">
+    </div>
+    @for (product of products; track $index) {
+      <div class="carousel-item">
+        <div tappable class="position-absolute ps-2 pt-2 rounded-top-0 chop-price ps-5" routerLink="/single-car/{{product.id}}">
+          <h5 class="lighter-bg">
+            {{product.name.toUpperCase()}}
+          </h5>
+          <p class="d-block w-auto max-widther">
+            @if ((product.discount && product.discount>0) 
+              || (product.variations && product.variations.length>0 && 
+              product.variations[0].discount && product.variations[0].discount>0)) {
+              <ion-text class="m-0 danger-bg pt-0 ps-1 pe-1 rounded-top-2 w-auto d-block text-light">
+                <small><del>Ksh {{product.variations[0].price.toLocaleString()}}</del></small>
+              </ion-text>
+            }
+            <ion-text class="danger-bg pb-1 ps-1 pe-1 rounded-bottom-2 d-block text-light">
+              @if(product.variations && product.variations.length>0 
+                && product.variations[0].discount && product.variations[0].discount){
+                Ksh {{(((100-product.variations[0].discount)/100)*product.variations[0].price).toLocaleString()}}
+              }@else if(product.discount && product.discount>0)  {
+                Ksh {{(((100-product.discount)/100)*product.variations[0].price).toLocaleString()}}
+              }@else{
+                Ksh {{product.variations[0].price.toLocaleString()}}
+              }
+            </ion-text>
+          </p>
+        </div>
+        <img tappable src="{{product.variations[0].images[0]}}" class="d-block w-auto m-auto heightimg rounded-2" alt="{{product.name}} image"
+        onerror="this.onerror=null;this.src='assets/Logo.png';">
+      </div>
+    }
+  </div>
+  <button class="carousel-control-prev max-height mt-auto mb-auto ms-2 rounded bg-secondary" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+    <i class="bi bi-caret-left-fill"></i>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next max-height mt-auto mb-auto me-2 rounded bg-secondary" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+    <i class="bi bi-caret-right-fill"></i>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="container mb-2">
+  <div class="row">
+    @for (deliverable of deliverables; track $index) {
+      <div class="col-12 col-sm-4 d-flex mb-3">
+        <ion-card class="m-auto h-100 w-100 pt-3 pop" mode="ios">
+          <div class="w-100 d-flex" style="height: 150px;">
+            <img src="{{deliverable.icon}}" class="m-auto w-auto mt-2 mb-2 rounded-circle" style="height: 150px;"
+            onerror="this.onerror=null;this.src='assets/Logo.png';"/>
+          </div>
+          <ion-card-header mode="md" class="text-center oswalder-light">
+            <ion-card-title class="fs-3 mt-3">{{deliverable.name.toUpperCase()}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode="md">
+            <ion-text class="ubuntu-regular fs-6">
+              {{deliverable.text}}
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    }
+  </div>
+</div>

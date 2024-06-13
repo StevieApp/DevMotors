@@ -1,13 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Shop</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Shop</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div class="container min-heighter">
+  @if (products && products.length>0) {
+    <div class="row pt-2">
+      @for (product of products; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex mb-3">
+          <ion-card mode="ios" style="width: 18rem; height: 350px;" class="hoverer m-auto">
+            <a href="/single-car/{{product.id}}" class="text-decoration-none ubuntu-bold darker-txt">
+              <img src="{{product.variations[0].images[0]}}" class="card-img-top" alt="{{product.name}} image">
+              <ion-card-content class="m-0 ps-2 pe-2">
+                <div class="d-block lipsis">
+                  <ion-card-title mode="md" class="mt-0">{{product.name}}</ion-card-title>
+                </div>
+                <p class="mb-0 text-danger oswalder-bold">
+                  @if ((product.discount && product.discount>0) 
+                    || (product.variations && product.variations.length>0 && 
+                    product.variations[0].discount && product.variations[0].discount>0)) {
+                    <ion-text class="m-0 pt-0d-block">
+                      <small><del>Ksh {{product.variations[0].price.toLocaleString()}}</del></small>
+                    </ion-text>
+                  }
+                  <ion-text class="d-block">
+                    @if(product.variations && product.variations.length>0 
+                      && product.variations[0].discount && product.variations[0].discount){
+                      Ksh {{(((100-product.variations[0].discount)/100)*product.variations[0].price).toLocaleString()}}
+                    }@else if(product.discount && product.discount>0)  {
+                      Ksh {{(((100-product.discount)/100)*product.variations[0].price).toLocaleString()}}
+                    }@else{
+                      Ksh {{product.variations[0].price.toLocaleString()}}
+                    }
+                  </ion-text>
+                </p>
+                <p class="card-text heightz open-sans-simple">{{product.description}}</p>
+                <ul class="list-group list-group-flush lighter-bg">
+                  <li class="list-group-item pt-1 lighter-bg"></li>
+                  <li class="list-group-item ps-0 pe-0 lighter-bg">
+                    <div class="d-grid gap-2 oswalder-light">
+                      <a href="tel:+254725603808" class="btn btn-danger">
+                        <i class="bi bi-telephone-fill"></i> Make Inquiry
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </ion-card-content>
+            </a>
+          </ion-card>
+        </div>
+      }
+    </div>
+  }@else {
+    <div class="w-100 d-flex full-height">
+      <ion-card-title mode="ios" class="m-auto text-center open-sans-simple">Vehicles Unavailable</ion-card-title>
+    </div>
+  }
+</div>

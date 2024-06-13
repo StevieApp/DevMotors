@@ -1,13 +1,140 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>SingleCar</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">SingleCar</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div class="container pt-4">
+  @if (product.name) {
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <div id="carouselExamplez" class="carousel slide h-75" data-bs-touch="true">
+          <div class="carousel-indicators">
+            <!-- <div tappable class="rounded-circle mynew active" width="10" height="10"
+            type="button" data-bs-target="#carouselExamplez" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></div> -->
+            @for(image of product.variations[selected].images; track $index){
+              @if($index==0){
+                <div tappable class="rounded-circle mynew active" width="10" height="10"
+               type="button" data-bs-target="#carouselExamplez" [attr.data-bs-slide-to]="$index" [attr.aria-label]="'Slide ' + ($index+1)"></div>
+              }@else {
+                <div tappable class="rounded-circle mynew" width="10" height="10"
+               type="button" data-bs-target="#carouselExamplez" [attr.data-bs-slide-to]="$index" [attr.aria-label]="'Slide ' + ($index+1)"></div>
+              }
+            }
+          </div>
+          <div class="carousel-inner pt-2 ps-1 pe-1 h-100">
+            @for (image of product.variations[selected].images; track $index) {
+              @if ($index==0) {
+                <div class="carousel-item active">
+                  <div tappable class="position-absolute ps-2 pt-2 rounded-top-0 chop-price ps-5"></div>
+                  <img tappable src="{{image}}" class="d-block w-auto m-auto heightimg rounded-2" alt="{{product.name}} image">
+                </div>
+              }@else {
+                <div class="carousel-item">
+                  <div tappable class="position-absolute ps-2 pt-2 rounded-top-0 chop-price ps-5"></div>
+                  <img tappable src="{{image}}" class="d-block w-auto m-auto heightimg rounded-2" alt="{{product.name}} image">
+                </div>
+              }
+            }
+          </div>
+          <button class="carousel-control-prev max-height mt-auto mb-auto ms-2 rounded bg-secondary" type="button" data-bs-target="#carouselExamplez" data-bs-slide="prev">
+            <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+            <i class="bi bi-caret-left-fill"></i>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next max-height mt-auto mb-auto me-2 rounded bg-secondary" type="button" data-bs-target="#carouselExamplez" data-bs-slide="next">
+            <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+            <i class="bi bi-caret-right-fill"></i>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <ion-card-title mode="ios" class="open-sans-bolder">
+          {{product.name.toUpperCase()}}
+        </ion-card-title>
+        <p class="d-block mt-3 ubuntu-regular mb-1">
+          @if ((product.discount && product.discount>0) 
+            || (product.variations && product.variations.length>0 && 
+            product.variations[selected].discount && product.variations[selected].discount>0)) {
+            <ion-text class="m-0 pt-0 ps-1 pe-1 rounded-top-2 w-auto d-block">
+              <small><del>Ksh {{product.variations[selected].price.toLocaleString()}}</del></small>
+            </ion-text>
+          }
+          <ion-text class="pb-1 ps-1 pe-1 rounded-bottom-2 d-block">
+            @if(product.variations && product.variations.length>0 
+              && product.variations[selected].discount && product.variations[selected].discount){
+              Ksh {{(((100-product.variations[selected].discount)/100)*product.variations[selected].price).toLocaleString()}}
+            }@else if(product.discount && product.discount>0)  {
+              Ksh {{(((100-product.discount)/100)*product.variations[selected].price).toLocaleString()}}
+            }@else{
+              Ksh {{product.variations[selected].price.toLocaleString()}}
+            }
+          </ion-text>
+        </p>
+        <p class="mb-2">
+          <ion-text>Brand: {{product.brand}}</ion-text>
+        </p>
+        @if (product.hybrid) {
+          <ion-chip class="mb-3" color="secondary">Hybrid</ion-chip>
+        }
+        <p class="sticky-bottom mb-5 balmer">
+          <a class="text-decoration-none hover-text" href="tel:+254725603808">
+            <span class="tooltip-text left">Call: +254-725-603808</span>
+            <ion-button expand="block">
+              <ion-card-title class="open-sans-bold" mode="md" color="light">
+                <i class="bi bi-telephone-fill"></i> Call Us
+              </ion-card-title>
+            </ion-button>
+          </a>
+          @if (loggedin && email && email=="mailer") {
+            <a class="text-decoration-none hover-text" href="/add-vehicle/{{id}}">
+              <ion-button expand="block" color="secondary">
+                <ion-card-title class="open-sans-bold" mode="md" color="light">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </ion-card-title>
+              </ion-button>
+            </a>
+          }
+        </p>
+        <p>
+          <ion-text class="open-sans-bold pt-4">Variations</ion-text>
+        </p>
+        <div class="d-flex scalar">
+          @for (variation of product.variations; track $index) {
+            @if (selected==$index) {
+              <ion-card mode="md" tappable class="rounded ms-2 me-2 p-2 border border-2 border-secondary" (click)="selected=$index">
+                <ion-text>
+                  {{variation.name}}
+                </ion-text>
+              </ion-card>
+            }@else {
+              <ion-card mode="md" tappable class="rounded ms-2 me-2 p-2" (click)="selected=$index">
+                <ion-text>
+                  {{variation.name}}
+                </ion-text>
+              </ion-card>
+            }
+          }
+        </div>
+      </div>
+      <div class="col-12 border-top pt-2 mt-2">
+        <ion-card-title mode="ios" class="open-sans-bolder">
+          Features
+        </ion-card-title>
+        <p class="mb-1 mt-2"><ion-text><b>Engine Capacity:</b> {{product.engine_capacity.toLocaleString()}}cc</ion-text></p>
+        <p class="mb-1"><ion-text><b>Horsepower:</b> {{product.horse_power.toLocaleString()}}hp</ion-text></p>
+        <p class="mb-1"><ion-text><b>Max Speed:</b> {{product.max_speed.toLocaleString()}}km/hr</ion-text></p>
+        <p class="mb-1"><ion-text><b>Mileage:</b> {{product.mileage.toLocaleString()}}km</ion-text></p>
+        <p class="mb-1 border-bottom pb-2"><ion-text><b>Fuel:</b> {{product.fuel}}@if(product.hybrid){/ELECTRIC}</ion-text></p>
+        <ion-card-title mode="ios" class="open-sans-bolder mt-2">
+          Description
+        </ion-card-title>
+        <p class="mt-1">{{product.description}}</p>
+        <ion-card-title mode="ios" class="open-sans-bolder mt-2">
+          {{product.variations[selected].name}} Description
+        </ion-card-title>
+        <p class="mt-1">{{product.variations[selected].description}}</p>
+      </div>
+    </div>
+  }@else {
+    <div class="w-100 d-flex full-height">
+      <ion-card-title mode="ios" class="m-auto text-center">Car Unavailable</ion-card-title>
+    </div>
+  }
+</div>

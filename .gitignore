@@ -19,6 +19,8 @@ log.txt
 
 # Ionic
 /.ionic
+# /windows_installer
+# /Dev Motors-win32-x64
 #/www
 /platforms
 /plugins
