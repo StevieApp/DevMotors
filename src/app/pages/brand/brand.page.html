@@ -13,7 +13,7 @@
       @for (product of products; track $index) {
         <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex mb-3">
           <ion-card mode="ios" style="width: 18rem; height: 350px;" class="hoverer m-auto">
-            <a href="/single-car/{{product.id}}" class="text-decoration-none ubuntu-bold darker-txt">
+            <a routerLink="/single-car/{{product.id}}" class="text-decoration-none ubuntu-bold darker-txt">
               <img src="{{product.variations[0].images[0]}}" class="card-img-top" alt="{{product.name}} image">
               <ion-card-content class="m-0 ps-2 pe-2">
                 <div class="d-block lipsis">
